@@ -34,9 +34,11 @@
 		noticeTimeUp();
 	}
 
+	// タイムアップしたことを知らせるための画面チカチカ関数
 	function noticeTimeUp(){
 		timerID = setTimeout(function (){
 			cnt += 1;
+			if (isRunning) return;
 			if (cnt >= 10) {
 				clearTimeout(timerID);
 				return;
@@ -51,12 +53,16 @@
 		}, 1000);
 	}
 
+	function to2order(num){
+		return ("0" + num).slice(-2);
+	}
+
 	function updateTime() {
 		timerID = setTimeout(function (){
 			// 時間をデクリメント
 			lastTime -= 1;
 			// 終了判定
-			if (lastTime == 0){
+			if (lastTime <= 0){
 				finish();
 				return;
 			}
@@ -64,7 +70,7 @@
 			h = parseInt(lastTime / 3600);
 			m = parseInt((lastTime - (3600 * h)) / 60);
 			s = parseInt(lastTime - (3600 * h) - (60 * m));
-			textTime.innerHTML = h + ":" + m + ":" + s;
+			textTime.innerHTML = to2order(h) + ":" + to2order(m) + ":" + to2order(s);
 			updateTime();
 		}, 1000);
 	}
@@ -75,6 +81,10 @@
 		// フラグ管理
 		if (isRunning) return;
 		isRunning = true;
+
+		// 背景を元の色に戻す
+		document.body.className = "body";
+
 		// entry からの数字読み込み
 		h = parseInt(document.forms.id_form1.inputHour.value);
 		m = parseInt(document.forms.id_form1.inputMin.value);
