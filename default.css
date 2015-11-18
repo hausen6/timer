@@ -3,6 +3,14 @@ body {
 	text-align: center;
 }
 
+body.yellow{
+	background: yellow;
+}
+
+body.red{
+	background: red;
+}
+
 #timeText {
 	font-size: 120px;
 	font-family: monospace;

@@ -14,6 +14,7 @@
 
 	var isRunning = false;
 	var timerID;
+	var cnt = 0;
 
 	function setButtonState(start, stop, resume){
 		startButton.disabled = !start;
@@ -28,7 +29,26 @@
 	function finish(){
 		stopButtonCB();
 		textTime.innerHTML = "Time Up";
-		document.body.gbColor = "yellow";
+		document.body.className = "body yellow";
+		cnt = 0;
+		noticeTimeUp();
+	}
+
+	function noticeTimeUp(){
+		timerID = setTimeout(function (){
+			cnt += 1;
+			if (cnt >= 10) {
+				clearTimeout(timerID);
+				return;
+			};
+			if (cnt % 2 == 0){
+				document.body.className = "body yellow";
+			}
+			else{
+				document.body.className = "body red";
+			}
+			noticeTimeUp();
+		}, 1000);
 	}
 
 	function updateTime() {
