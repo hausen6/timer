@@ -9,16 +9,17 @@
 		<h1>タイマー</h1>
 		<!-- GUI 部品 -->
 		<div id="timeText">0.00</div>
-		<div id="inputHour"><input type="text" placeholder="hour"></div>
-		<div id="inputMin"><input type="text" placeholder="min"></div>
-		<div id="inputSec"><input type="text" placeholder="sec"></div>
+		<form name="form1" id="id_form1">
+			<input type="text" placeholder="hour" value="0" id="inputHour">
+			<input type="text" placeholder="min" value="0" id="inputMin">
+			<input type="text" placeholder="sec" value="0" id="inputSec">
+		</form>
 		<br>
 		<div id="startButton" class="button active">Start</div>
 		<div id="stopButton" class="button inactive">Stop</div>
-		<div id="resetButton" class="button inactive">Reset</div>
+		<div id="resumeButton" class="button inactive">Resume</div>
 
 		<br>
-		<p><a href="../index.html">Back</a</p>
 
 		<script type="text/javascript" src="timer.js"></script>
 	</body >
