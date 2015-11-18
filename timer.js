@@ -25,9 +25,22 @@
 		resumeButton.className = resume ? "button active": "button inactive";
 	}
 
+	function finish(){
+		stopButtonCB();
+		textTime.innerHTML = "Time Up";
+		document.body.gbColor = "yellow";
+	}
+
 	function updateTime() {
 		timerID = setTimeout(function (){
+			// 時間をデクリメント
 			lastTime -= 1;
+			// 終了判定
+			if (lastTime == 0){
+				finish();
+				return;
+			}
+			// 時間の計算
 			h = parseInt(lastTime / 3600);
 			m = parseInt((lastTime - (3600 * h)) / 60);
 			s = parseInt(lastTime - (3600 * h) - (60 * m));
@@ -37,7 +50,8 @@
 	}
 
 	// start button を押した際の処理
-	startButton.addEventListener("click", function () {
+	startButton.addEventListener("click", startButtonCB);
+	function startButtonCB() {
 		// フラグ管理
 		if (isRunning) return;
 		isRunning = true;
@@ -52,10 +66,11 @@
 		updateTime();
 		// button の状態を変化
 		setButtonState(false, true, false);
-	});
+	};
 
 	// stop button 処理
-	stopButton.addEventListener("click", function () {
+	stopButton.addEventListener("click", stopButtonCB);
+	function stopButtonCB () {
 		// フラグ管理
 		if (!isRunning) return;
 		isRunning = false;
@@ -63,7 +78,7 @@
 		clearTimeout(timerID);
 		// button の状態を変化
 		setButtonState(true, false, true);
-	});
+	};
 
 	// resume button 処理
 	resumeButton.addEventListener("click", function(){
