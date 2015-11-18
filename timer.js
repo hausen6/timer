@@ -9,6 +9,7 @@
 	var Sec = document.getElementById("inputSec");
 	var textTime = document.getElementById("timeText");
 
+	var startTime = 0;
 	var lastTime = 0;
 	var h, m, s;
 
@@ -39,7 +40,7 @@
 		timerID = setTimeout(function (){
 			cnt += 1;
 			if (isRunning) return;
-			if (cnt >= 10) {
+			if (cnt >= 30) {
 				clearTimeout(timerID);
 				return;
 			};
@@ -50,7 +51,7 @@
 				document.body.className = "body red";
 			}
 			noticeTimeUp();
-		}, 1000);
+		}, 300);
 	}
 
 	function to2order(num){
@@ -70,6 +71,16 @@
 			h = parseInt(lastTime / 3600);
 			m = parseInt((lastTime - (3600 * h)) / 60);
 			s = parseInt(lastTime - (3600 * h) - (60 * m));
+
+			// 残り時間によって画面の背景を変化
+			// 残り時間が 1 / 10 以下になったら画面を赤くする
+			if (lastTime <= startTime / 10){
+				document.body.className = "body red";
+			}
+			// 残り時間が 1 / 3 以下になったら画面を黄色くする
+			else if (lastTime <= startTime / 3){
+				document.body.className = "body yellow";
+			}
 			textTime.innerHTML = to2order(h) + ":" + to2order(m) + ":" + to2order(s);
 			updateTime();
 		}, 1000);
@@ -91,7 +102,8 @@
 		s = parseInt(document.forms.id_form1.inputSec.value);
 		// 時間計算
 		lastTime = h * 3600 + m * 60 + s;
-		textTime.innerHTML = h + ":" + m + ":" + s;
+		startTime = lastTime;
+		textTime.innerHTML = to2order(h) + ":" + to2order(m) + ":" + to2order(s);
 		// 処理の呼び出し
 		updateTime();
 		// button の状態を変化
